@@ -230,8 +230,20 @@ function submitForm() {
   });
 }
 async function sendToNotion(data) {
-  console.log('Form data:', JSON.stringify(data, null, 2));
-  return new Promise(resolve => setTimeout(resolve, 1500));
+  // =============================================
+  // Replace this URL with your Cloudflare Worker URL
+  // Example: https://genai-form.your-name.workers.dev
+  // =============================================
+  const WORKER_URL = 'https://aged-haze-9d12.mark-victor-pro.workers.dev';
+  
+  const response = await fetch(WORKER_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+  
+  if (!response.ok) throw new Error('Submission failed');
+  return response.json();
 }
 </script>
 </body>
